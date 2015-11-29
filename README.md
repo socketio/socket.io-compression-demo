@@ -6,9 +6,9 @@ A demo which shows the savings for a realtime stream of activity on GitHub.
 Please create an access token on GitHub.
 https://help.github.com/articles/creating-an-access-token-for-command-line-use/
 
-```js
-npm install
-GITHUB_ACCESS_TOKEN=yourtoken npm start
+```sh
+$ npm install
+$ GITHUB_ACCESS_TOKEN=yourtoken npm start
 ```
 
 ## License
