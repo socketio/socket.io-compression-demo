@@ -1,0 +1,67 @@
+body {
+  padding: 50px;
+}
+
+.github-events {
+  list-style-type: none;
+}
+
+.github-events .event {
+  margin: 12px 0;
+}
+
+.github-events .avatar,
+.github-events .event-type,
+.github-events .desc {
+  margin: 0px 8px;
+}
+
+.github-events .avatar img {
+  width: 40px;
+  border-radius: 50px;
+}
+
+.github-events .event-type {
+  color: #fff;
+  background-color: #4a4a4a;
+  width: 80px;
+}
+
+.stats {
+  color: #4a4a4a;
+  background-color: #f3f3f3;
+  padding: 10px 25px;
+  margin: 12px 0;
+}
+
+.stats h2,
+.stats h3 {
+  font-size: 1em;
+  font-weight: normal;
+  margin: 10px 10px 10px 0;
+}
+
+.stats h2 {
+  color: #9b9b9b;
+  font-family: 'Open Sans', sans-serif
+}
+
+.stats h3 {
+  display: inline-block;
+}
+
+.stats .data {
+  font-weight: bold;
+}
+
+.stats .bar {
+  height: 6px;
+}
+
+.stats .sent .bar {
+  background-color: #d8d8d8;
+}
+
+.stats .sent-compressed .bar {
+  background-color: #00eec5;
+}
