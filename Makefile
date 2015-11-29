@@ -3,7 +3,7 @@ build:
 	@node_modules/.bin/browserify public/index.js -t babelify -o public/bundle.js
 
 start: build
-	node -r babel-core/register .
+	@bin/start
 
 clean:
 	@rm -rf public/bundle.js

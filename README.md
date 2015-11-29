@@ -8,8 +8,6 @@ https://help.github.com/articles/creating-an-access-token-for-command-line-use/
 
 ```js
 npm install
-
-# requires Node v4 or later
 GITHUB_ACCESS_TOKEN=yourtoken npm start
 ```
 
