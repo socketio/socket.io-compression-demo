@@ -35,10 +35,17 @@ body {
 }
 
 .stats h2,
+.stats .transmitted,
+.stats .sent,
+.stats .sent-compressed,
+.stats .savings {
+  margin: 15px 0;
+}
+
+.stats h2,
 .stats h3 {
   font-size: 1em;
   font-weight: normal;
-  margin: 10px 10px 10px 0;
 }
 
 .stats h2 {
@@ -48,6 +55,7 @@ body {
 
 .stats h3 {
   display: inline-block;
+  margin: 0 10px 0 0;
 }
 
 .stats .data {
@@ -56,6 +64,7 @@ body {
 
 .stats .bar {
   height: 6px;
+  margin: 6px 0;
 }
 
 .stats .sent .bar {
