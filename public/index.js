@@ -104,6 +104,10 @@ class GitHubEvents extends React.Component {
         return 'released';
       case 'WatchEvent':
         return 'watched';
+      case 'IssuesEvent':
+        return `${event.payload.action} an issue on`;
+      case 'PullRequestEvent':
+        return `${event.payload.action} a pull request on`;
     }
   }
 }
