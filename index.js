@@ -5,7 +5,6 @@ import express from 'express';
 import socketio from 'socket.io';
 import tweetStream from 'node-tweet-stream';
 import dbg from 'debug';
-import PerMessageDeflate from 'socket.io/node_modules/engine.io/node_modules/ws/lib/PerMessageDeflate';
 
 const PORT = process.env.PORT || 3000;
 
@@ -20,36 +19,43 @@ let tw = tweetStream({
   token_secret: process.env.TWITTER_TOKEN_SECRET
 });
 let tweets = [];
-let stats = {
-  transmitted: 0,
-  sent: 0,
-  sentCompressed: 0
-};
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-let compress = PerMessageDeflate.prototype.compress;
-
-// patch to get compressed sizes
-PerMessageDeflate.prototype.compress = function(data, fin, callback) {
-  compress.call(this, data, fin, (err, compressed) => {
-    if (!err) {
-      stats.transmitted++;
-      stats.sent += data.length;
-      stats.sentCompressed += compressed.length;
-      debug('connection stats updated %j', stats);
-    }
-
-    callback(err, compressed);
-  });
-};
-
 io.on('connection', (socket) => {
-  socket.emit('tweets', tweets, stats);
+  let stats = socket.client.stats = {
+    transmitted: 0,
+    sent: 0,
+    sentCompressed: 0
+  };
+
+  socket.conn.on('upgrade', (transport) => {
+    let perMessageDeflate = transport.socket.extensions['permessage-deflate'];
+    let { compress } = perMessageDeflate;
+
+    // patch to get stats
+    perMessageDeflate.compress = function(data, fin, callback) {
+      compress.call(this, data, fin, (err, compressed) => {
+        if (!err) {
+          stats.transmitted++;
+          stats.sent += data.length;
+          stats.sentCompressed += compressed.length;
+          debug('connection stats updated %s %j', socket.client.id, stats);
+        }
+        callback(err, compressed);
+      });
+    };
+  });
+
+  socket.conn.once('drain', () => {
+    socket.emit('stats', stats);
+  });
+  socket.emit('tweets', tweets);
 });
 
 tw.track('socket.io');
 tw.track('javascrtipt');
+tw.track('github');
 tw.on('tweet', (tweet) => {
   debug('a new tweet: %s %s', tweet.user.name, tweet.text);
 
@@ -57,7 +63,15 @@ tw.on('tweet', (tweet) => {
     tweets.unshift(tweet);
     tweets = tweets.slice(0, 10);
   }
-  io.emit('tweet', tweet, stats);
+
+  Object.keys(io.sockets.connected).forEach((sid) => {
+    let socket = io.sockets.connected[sid];
+    socket.conn.once('drain', () => {
+      socket.emit('stats', socket.client.stats);
+    });
+  });
+
+  io.emit('tweet', tweet);
 });
 
 server.listen(PORT, () => {

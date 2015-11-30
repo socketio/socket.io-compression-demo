@@ -17,12 +17,15 @@ class App extends React.Component {
 
   componentWillMount() {
     let socket = io();
-    socket.on('tweets', (tweets, stats) => {
-      this.setState({ tweets, stats });
+    socket.on('tweets', (tweets) => {
+      this.setState({ tweets });
     });
-    socket.on('tweet', (tweet, stats) => {
+    socket.on('tweet', (tweet) => {
       let tweets = [tweet].concat(this.state.tweets);
-      this.setState({ tweets, stats });
+      this.setState({ tweets });
+    });
+    socket.on('stats', (stats) => {
+      this.setState({ stats });
     });
   }
 
