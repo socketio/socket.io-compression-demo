@@ -104,9 +104,12 @@ class Stats extends React.Component {
 }
 
 function formatSize(size) {
-  let kb = Math.floor(size / 1024);
+  let kb = Math.floor(size / 1024 * 10) / 10;
+
   // http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-  return kb.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + 'kb';
+  let parts = kb.toString().split('.');
+  parts[0] = parts[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return parts.join('.') + 'kb';
 }
 
 render(<App />, document.getElementById('app'));

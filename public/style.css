@@ -8,7 +8,7 @@ body {
 
 .new-appear-active {
   width: 100%;
-  transition: width 500ms ease-in;
+  transition: width 300ms ease-in;
 }
 
 .tweets {
