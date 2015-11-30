@@ -1,11 +1,13 @@
 import io from 'socket.io-client';
 import React from 'react';
 import { render } from 'react-dom';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      animation: false,
       tweets: [],
       stats: {
         transmitted: 0,
@@ -18,11 +20,11 @@ class App extends React.Component {
   componentWillMount() {
     let socket = io();
     socket.on('tweets', (tweets) => {
-      this.setState({ tweets });
+      this.setState({ tweets, animation: false });
     });
     socket.on('tweet', (tweet) => {
-      let tweets = [tweet].concat(this.state.tweets);
-      this.setState({ tweets });
+      let tweets = [tweet].concat(this.state.tweets).slice(0, 20);
+      this.setState({ tweets, animation: true });
     });
     socket.on('stats', (stats) => {
       this.setState({ stats });
@@ -33,7 +35,7 @@ class App extends React.Component {
     return <div className="container">
       <div className="row">
         <div className="col-xs-7">
-          <Tweets tweets={this.state.tweets} />
+          <Tweets tweets={this.state.tweets} animation={this.state.animation} />
         </div>
         <div className="col-xs-5">
           <Stats stats={this.state.stats} />
@@ -45,17 +47,28 @@ class App extends React.Component {
 
 class Tweets extends React.Component {
   render() {
+    let { tweets, animation } = this.props;
     return <ul className="tweets">
-      {this.props.tweets.map((tweet) => {
-        return <li className="tweet" key={tweet.id}>
-          <div className="profile-image">
-            <img src={tweet.user.profile_image_url}/>
+      {tweets.map((tweet) => {
+        return <ReactCSSTransitionGroup
+            key={tweet.id}
+            component="li"
+            className="tweet"
+            transitionName="new"
+            transitionAppear={animation}
+            transitionAppearTimeout={0}
+            transitionEnterTimeout={0}
+            transitionLeaveTimeout={0}>
+          <div key={'wrapper' + tweet.id}>
+            <div className="profile-image">
+              <img src={tweet.user.profile_image_url}/>
+            </div>
+            <div className="content">
+              <h3 className="name">{tweet.user.name}</h3>
+              <p className="text">{tweet.text}</p>
+            </div>
           </div>
-          <div className="content">
-            <h3 className="name">{tweet.user.name}</h3>
-            <p className="text">{tweet.text}</p>
-          </div>
-        </li>;
+        </ReactCSSTransitionGroup>
       })}
     </ul>;
   }

@@ -2,6 +2,15 @@ body {
   padding: 50px;
 }
 
+.new-appear {
+  width: 0%;
+}
+
+.new-appear-active {
+  width: 100%;
+  transition: width 500ms ease-in;
+}
+
 .tweets {
   list-style-type: none;
 }
@@ -12,7 +21,7 @@ body {
 }
 
 .tweets .profile-image {
-  width: 55px;
+  width: 15%;
   float: left;
 }
 
