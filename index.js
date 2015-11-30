@@ -55,7 +55,6 @@ io.on('connection', (socket) => {
 
 tw.track('socket.io');
 tw.track('javascrtipt');
-tw.track('github');
 tw.on('tweet', (tweet) => {
   debug('a new tweet: %s %s', tweet.user.name, tweet.text);
 
