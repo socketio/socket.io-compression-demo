@@ -1,4 +1,4 @@
 node_modules
 /public/bundle.js
-/config.json
 *.log
+.env

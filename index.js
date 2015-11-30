@@ -5,7 +5,6 @@ import express from 'express';
 import socketio from 'socket.io';
 import tweetStream from 'node-tweet-stream';
 import dbg from 'debug';
-import cfg from './config.json';
 import PerMessageDeflate from 'socket.io/node_modules/engine.io/node_modules/ws/lib/PerMessageDeflate';
 
 const PORT = process.env.PORT || 3000;
@@ -14,7 +13,12 @@ let debug = dbg('socket.io-compression-demo');
 let app = express();
 let server = http.createServer(app);
 let io = socketio(server);
-let tw = tweetStream(cfg);
+let tw = tweetStream({
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  token: process.env.TWITTER_TOKEN,
+  token_secret: process.env.TWITTER_TOKEN_SECRET
+});
 let tweets = [];
 let stats = {
   transmitted: 0,

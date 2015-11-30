@@ -3,17 +3,13 @@
 A demo which shows the savings for a realtime stream on Twitter.
 
 ## How to use
-Please prepare a twitter access token and create `config.json`.
+Please prepare a twitter access token and set the following environment variables.
 
 ```sh
-$ cat config.json
-{
-  "consumer_key": "xxxxxxxxxx",
-  "consumer_secret": "xxxxxxxxxx",
-  "token": "xxxxxxxxxx",
-  "token_secret": "xxxxxxxxxx"
-}
-
+$ export TWITTER_CONSUMER_KEY=xxxxxxxxxx
+$ export TWITTER_CONSUMER_SECRET=xxxxxxxxxx
+$ export TWITTER_TOKEN=xxxxxxxxxx
+$ export TWITTER_TOKEN_SECRET=xxxxxxxxxx
 $ npm install
 $ npm start
 ```
