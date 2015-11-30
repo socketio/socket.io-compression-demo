@@ -1,14 +1,21 @@
 # Socket.IO Compression Demo
 
-A demo which shows the savings for a realtime stream of activity on GitHub.
+A demo which shows the savings for a realtime stream on Twitter.
 
 ## How to use
-Please create an access token on GitHub.
-https://help.github.com/articles/creating-an-access-token-for-command-line-use/
+Please prepare a twitter access token and create `config.json`.
 
 ```sh
+$ cat config.json
+{
+  "consumer_key": "xxxxxxxxxx",
+  "consumer_secret": "xxxxxxxxxx",
+  "token": "xxxxxxxxxx",
+  "token_secret": "xxxxxxxxxx"
+}
+
 $ npm install
-$ GITHUB_ACCESS_TOKEN=yourtoken npm start
+$ npm start
 ```
 
 ## License

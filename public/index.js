@@ -6,7 +6,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: [],
+      tweets: [],
       stats: {
         transmitted: 0,
         sent: 0,
@@ -17,8 +17,12 @@ class App extends React.Component {
 
   componentWillMount() {
     let socket = io();
-    socket.on('events', (events, stats) => {
-      this.setState({ events, stats });
+    socket.on('tweets', (tweets, stats) => {
+      this.setState({ tweets, stats });
+    });
+    socket.on('tweet', (tweet, stats) => {
+      let tweets = [tweet].concat(this.state.tweets);
+      this.setState({ tweets, stats });
     });
   }
 
@@ -26,7 +30,7 @@ class App extends React.Component {
     return <div className="container">
       <div className="row">
         <div className="col-xs-7">
-          <GitHubEvents events={this.state.events} />
+          <Tweets tweets={this.state.tweets} />
         </div>
         <div className="col-xs-5">
           <Stats stats={this.state.stats} />
@@ -36,79 +40,21 @@ class App extends React.Component {
   }
 }
 
-class GitHubEvents extends React.Component {
+class Tweets extends React.Component {
   render() {
-    return <ul className="github-events">
-      {this.props.events.map((event) => {
-        let action = this.getAction(event);
-        if (!action) return;
-
-        let repo = event.repo.name.split('/')[1];
-        let type = this.getType(event);
-
-        return <li className="event" key={event.id}>
-          <span className="avatar">
-            <img src={event.actor.avatar_url}/>
-          </span>
-          <span className="event-type badge">{type}</span>
-          <span className="desc">{event.actor.login} {action} {repo}</span>
+    return <ul className="tweets">
+      {this.props.tweets.map((tweet) => {
+        return <li className="tweet" key={tweet.id}>
+          <div className="profile-image">
+            <img src={tweet.user.profile_image_url}/>
+          </div>
+          <div className="content">
+            <h3 className="name">{tweet.user.name}</h3>
+            <p className="text">{tweet.text}</p>
+          </div>
         </li>;
-      }).filter(v => !!v)}
+      })}
     </ul>;
-  }
-
-  getType(event) {
-    let type;
-    switch (event.type) {
-      case 'CommitCommentEvent':
-      case 'IssueCommentEvent':
-      case 'PullRequestReviewCommentEvent':
-        type = 'Comment';
-        break;
-      case 'WatchEvent':
-        type = 'Follow';
-        break;
-      default:
-        type = event.type.replace(/Event$/, '');
-        break;
-    }
-    return type.toUpperCase();
-  }
-
-  getAction(event) {
-    switch (event.type) {
-      case 'CommitCommentEvent':
-      case 'IssueCommentEvent':
-      case 'PullRequestReviewCommentEvent':
-        return 'commented to';
-      case 'CreateEvent':
-        let refType = event.payload.ref_type;
-        switch (refType) {
-          case 'repository':
-            return 'created';
-          case 'branch':
-          case 'tag':
-            return `created a ${refType} on`;
-        }
-      case 'DeleteEvent':
-        return `deleted a ${event.payload.ref_type}`;
-      case 'FollowEvent':
-        return 'followed';
-      case 'ForkEvent':
-        return 'forked';
-      case 'GollumEvent':
-        return 'edited wiki on';
-      case 'PushEvent':
-        return 'pushed to';
-      case 'ReleaseEvent':
-        return 'released';
-      case 'WatchEvent':
-        return 'watched';
-      case 'IssuesEvent':
-        return `${event.payload.action} an issue on`;
-      case 'PullRequestEvent':
-        return `${event.payload.action} a pull request on`;
-    }
   }
 }
 

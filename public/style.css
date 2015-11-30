@@ -2,29 +2,40 @@ body {
   padding: 50px;
 }
 
-.github-events {
+.tweets {
   list-style-type: none;
 }
 
-.github-events .event {
+.tweets .tweet {
   margin: 12px 0;
+  overflow: hidden;
 }
 
-.github-events .avatar,
-.github-events .event-type,
-.github-events .desc {
-  margin: 0px 8px;
+.tweets .profile-image {
+  width: 55px;
+  float: left;
 }
 
-.github-events .avatar img {
+.tweets .profile-image img {
   width: 40px;
-  border-radius: 50px;
+  border-radius: 50%;
+  margin-right: 8px;
 }
 
-.github-events .event-type {
-  color: #fff;
-  background-color: #4a4a4a;
-  width: 80px;
+.tweets .content {
+  width: 85%;
+  float: left;
+}
+
+.tweets .text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tweets .name {
+  font-size: 1em;
+  margin: 0;
 }
 
 .stats {
