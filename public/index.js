@@ -48,8 +48,11 @@ class App extends React.Component {
 class Tweets extends React.Component {
   render() {
     let { tweets, animation } = this.props;
+
     return <ul className="tweets">
       {tweets.map((tweet) => {
+        let url = `https:///twitter.com/${encodeURIComponent(tweet.user.screen_name)}/status/${encodeURIComponent(tweet.id_str)}`;
+
         return <ReactCSSTransitionGroup
             key={tweet.id}
             component="li"
@@ -59,7 +62,7 @@ class Tweets extends React.Component {
             transitionAppearTimeout={0}
             transitionEnterTimeout={0}
             transitionLeaveTimeout={0}>
-          <div key={'wrapper' + tweet.id}>
+          <a key={'wrapper' + tweet.id} className="wrapper" href={url} target="_blank">
             <div className="profile-image">
               <img src={tweet.user.profile_image_url}/>
             </div>
@@ -67,7 +70,7 @@ class Tweets extends React.Component {
               <h3 className="name">{tweet.user.name}</h3>
               <p className="text">{tweet.text}</p>
             </div>
-          </div>
+          </a>
         </ReactCSSTransitionGroup>
       })}
     </ul>;

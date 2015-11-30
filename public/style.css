@@ -20,6 +20,12 @@ body {
   overflow: hidden;
 }
 
+.tweets .wrapper {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
 .tweets .profile-image {
   width: 15%;
   float: left;
