@@ -1,0 +1,27 @@
+{
+  "name": "Socket.IO Compression Demo",
+  "description": "A demo which shows the savings for a realtime stream on Twitter",
+  "repository": "https://github.com/socketio/socket.io-compression-demo",
+  "keywords": [
+    "socket.io",
+    "compression"
+  ],
+  "env": {
+    "TWITTER_CONSUMER_KEY": {
+      "description": "Twitter OAuth consumer key",
+      "required": true
+    },
+    "TWITTER_CONSUMER_SECRET": {
+      "description": "Twitter OAuth consumer secret",
+      "required": true
+    },
+    "TWITTER_TOKEN": {
+      "description": "Twitter OAuth access token",
+      "required": true
+    },
+    "TWITTER_TOKEN_SECRET": {
+      "description": "Twitter OAuth access token secret",
+      "required": true
+    }
+  }
+}

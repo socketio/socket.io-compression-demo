@@ -3,7 +3,14 @@
 A demo which shows the savings for a realtime stream on Twitter.
 
 ## How to use
-Please prepare a twitter access token and set the following environment variables.
+Please prepare a [Twitter access token](https://dev.twitter.com/oauth/application-only).
+
+### Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+### Custom
+Set the environment variables and start your server.
 
 ```sh
 $ export TWITTER_CONSUMER_KEY=xxxxxxxxxx
