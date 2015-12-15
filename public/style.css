@@ -15,10 +15,12 @@ body {
 .tweets-container {
   max-width: 700px;
   height: 250px;
+  margin: auto;
 }
 
 .tweets-container p.waiting {
   font: 12px Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  text-align: center;
 }
 
 .tweets {
@@ -123,4 +125,16 @@ body {
 
 .stats .sent-compressed .bar {
   background-color: #00eec5;
+}
+
+@media screen and (max-width: 500px) {
+  .tweets {
+    margin: auto;
+  }
+
+  .stats {
+    float: none;
+    padding: 5px 25px;
+    margin: 15px auto;
+  }
 }
