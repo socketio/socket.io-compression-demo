@@ -18,7 +18,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    let socket = io();
+    let socket = io(this.props.url);
     socket.on('tweets', (tweets) => {
       this.setState({ tweets, animation: false });
     });
