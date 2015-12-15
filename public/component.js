@@ -1,9 +1,8 @@
 import io from 'socket.io-client';
 import React from 'react';
-import { render } from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-class App extends React.Component {
+export default class Demo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -117,5 +116,3 @@ function formatSize(size) {
   parts[0] = parts[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return parts.join('.') + 'kb';
 }
-
-render(<App />, document.getElementById('app'));
