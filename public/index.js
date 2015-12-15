@@ -32,15 +32,18 @@ class App extends React.Component {
   }
 
   render() {
-    return <div className="container">
-      <div className="row">
-        <div className="col-xs-7">
-          <Tweets tweets={this.state.tweets} animation={this.state.animation} />
+    return <div className="tweets-container">
+      { this.state.stats.transmitted ?
+        <div>
+          <div>
+            <Stats stats={this.state.stats} />
+          </div>
+          <div>
+            <Tweets tweets={this.state.tweets} animation={this.state.animation} />
+          </div>
         </div>
-        <div className="col-xs-5">
-          <Stats stats={this.state.stats} />
-        </div>
-      </div>
+      : <p className="waiting">Waiting for tweets…</p>
+      }
     </div>;
   }
 }
