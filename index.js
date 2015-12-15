@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
   socket.conn.once('drain', () => {
     socket.emit('stats', stats);
   });
-  socket.emit('tweets', tweets);
+  //socket.emit('tweets', tweets);
 });
 
 tw.track('socket.io');
